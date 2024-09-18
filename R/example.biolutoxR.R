@@ -241,12 +241,19 @@ example.biolutoxR <- function() {
       geom_ribbon(data=newdata, aes(x=conc, y=p, ymin=pmin, ymax=pmax), alpha=0.2, fill = "#b1c9ec") +
       geom_line(data=newdata, aes(x=conc, y=p), color = "blue") +
       theme_test() +
+      theme(axis.text = element_text(color = "black", size = 12, face = "italic"),
+            axis.title = element_text(color = "black", size = 18),
+            axis.title.x = element_text(margin = margin(t = 13)),
+            axis.title.y = element_text(margin = margin(r = 13)),
+            legend.text = element_text(color = "black", size = 12),
+            legend.title = element_text(color = "black", size = 12),
+            panel.border = element_rect(colour = "black", fill=NA, size=1)) +
       coord_trans(x="log") +
-      annotate("text", x = 1, y = 105, label = paste("R² =", round(R2, 2)), size = 5, hjust = 0) +
-      annotate("text", x = 1, y = 95, label = "Equation:", size = 4, hjust = 0) +
-      annotate("text", x = 1, y = 90, label = equation, size = 4, hjust = 0) +
-      annotate("text", x = 1, y = 85, label = paste0("  - ", summ_signf[1,]$type, " (Estimate:", summ_signf[1,]$Estimate, ")", " with a p-value ", summ_signf[1,]$p_value), size = 4, hjust = 0) +
-      annotate("text", x = 1, y = 80, label = paste0("  - ", summ_signf[2,]$type, " (Estimate:", summ_signf[2,]$Estimate, ")", " with a p-value ", summ_signf[2,]$p_value), size = 4, hjust = 0) +
+      annotate("text", x = 1, y = 100, label = paste("R² =", round(R2, 2)), size = 5, hjust = 0) +
+      annotate("text", x = 1, y = 90, label = "Dose-response curve equation:", size = 4, hjust = 0) +
+      annotate("text", x = 1, y = 85, label = equation, size = 4, hjust = 0) +
+      annotate("text", x = 1, y = 80, label = paste0("  - ", summ_signf[1,]$type, " (estimation: ", summ_signf[1,]$Estimate, ")", " with a p-value ", summ_signf[1,]$p_value), size = 4, hjust = 0) +
+      annotate("text", x = 1, y = 75, label = paste0("  - ", summ_signf[2,]$type, " (estimation: ", summ_signf[2,]$Estimate, ")", " with a p-value ", summ_signf[2,]$p_value), size = 4, hjust = 0) +
       labs(x = "Dilution (in %)", y = "Biolu. inhibition (in %)") +
       scale_y_continuous(limits = c(-10, 110), breaks = c(0, 20, 40, 60, 80, 100))+
       scale_x_continuous(limits = c(1, 100), breaks = c(1.5625, 3.125, 6.25, 12.5, 25, 50, 100))
@@ -318,38 +325,54 @@ example.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              img(src = "https://cdn.icon-icons.com/icons2/881/PNG/512/Fish_Food_icon-icons.com_68747.png",
-                                  width = "80%",
-                                  height = "80%")
-                            ),
+                              imageOutput("img_pckg", width = 50, height = 50)
+                              ),
                             column(
                               width = 11,
                               h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
-                              p("This app is very useful to facilitate data analysis of toxicity test based on bacterial bioluminescence inhibition data.")
+                              h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>"))
                             )
                           ),
 
                           br(),
 
                           h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
-                          p("Among standardized toxicity tests, toxicity test based on bacterial bioluminescence inhibitions offer the possibility of studying chemical toxicity with 'speed, simplicity, reproducibility, precision, sensitivity, standardization, cost-effectiveness and convenience' (Isenberg, 1993). More concretely, the toxicity test based on bacterial bioluminescence inhibition is a standardized acute toxicity test (bacterial luminescence test ISO 11348-3 and ISO 21338) which evaluates the bioluminescent response of a bacterium to a potentially toxic stress (Johnson, 2005). This bioassay uses Aliivibrio fisheri (formerly Vibrio fisheri), a non-pathogenic gram-negative marine bacterium which, under optimal conditions, produces bioluminescence, a phenomenon directly linked to its respiratory metabolic process. When exposed to a toxic substance, this metabolic process is disrupted, leading to a reduction in bioluminescence. This reaction is therefore exploited in the toxicity test based on bacterial bioluminescence inhibition to study the direct link between light intensity and the toxicity level of a sample compared to a control sample (with no toxic substance)."),
-
+                          p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
+                          p("An image for resume the manipulation:"),   
+                          
+                          imageOutput("img", height = 300),
+                          
+                          br(),
+                          br(),
+                          br(),
+                          br(),
+                          br(),
+                          br(),
+                          br(),
                           br(),
 
                           h3(HTML("<b>How use this app?</b>")),
-                          p("1) Scheme panel: "),
-                          p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NaCl)"),
+                          h4(HTML("<b>> Scheme tab:</b>")),
+                          p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
                           p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
-                          p("2) Time X panel: for each time panel, complete matrix based on the results obtained during the experiment."),
-                          p("3) Table panel: raw resutls."),
-                          p("4) Plot panel: comparison plot and dose-response curve and EC50 and EC20 value."),
-                          p("5) Exit panel: to quit this application."),
+                          h4(HTML("<b>> Times tab:</b>")),
+                          p("- Complete the field with the relevant exposure time."),
+                          p("- Complete matrices based on the bioluminescence values obtained during the test."),
+                          h4(HTML("<b>> Table tab:</b>")),
+                          p("- This tab print the cleaned data."),
+                          p("- The cleaned final data table can be exported in '.csv' format."),
+                          h4(HTML("<b>> Plot tab:</b>")),
+                          p("- To visualize test results."),
+                          p("- To print dose-response curve."),
+                          p("- To calculate ECx values."),
+                          h4(HTML("<b>> Exit tab:</b>")),
+                          p("- To quit this application."),
 
                           br(),
 
                           h3(HTML("<b style='color: red;'>Warning</b>")),
-                          p(HTML("<b style='color: red;'> - Open the tabs in sequence to load the table and graphics.</b>")),
-                          p(HTML("<b style='color: red;'> - Don't add new matrices after you have filled your matrices.</b>"))
+                          p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
+                          p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>"))
 
                  ), # Fermeture du panel "Présentation"
 
@@ -421,7 +444,7 @@ example.biolutoxR <- function() {
                             column(
                               width = 4,
                               h4(HTML("Settings:")),
-                              h5(HTML("Select time to conserve:")),
+                              h5(HTML("Select time(s) to conserve:")),
                               fluidRow(
                                 column(2, align = "left", uiOutput("dynamic_filter_t1")),
                                 column(2, align = "left", uiOutput("dynamic_filter_t2")),
@@ -430,7 +453,7 @@ example.biolutoxR <- function() {
 
                               br(),
 
-                              h5(HTML("Select dilution to conserve:")),
+                              h5(HTML("Select dilution(s) to conserve:")),
                               uiOutput("dynamic_dilution_checkboxes"),
 
                               br(),
@@ -467,7 +490,7 @@ example.biolutoxR <- function() {
                             column(
                               width = 4,
                               h4(HTML("Settings:")),
-                              h5(HTML("Select time variables to conserve:")),
+                              h5(HTML("Select time(s) to conserve:")),
                               fluidRow(
                                 column(2, align = "left", uiOutput("dynamic_filter_t1_2")),
                                 column(2, align = "left", uiOutput("dynamic_filter_t2_2")),
@@ -500,8 +523,7 @@ example.biolutoxR <- function() {
                             column(
                               width = 8,
                               plotOutput("ec50_plot"),
-                              h5(HTML("Are represented in red the EC50 and in yellow the EC20."), style = "text-align: center;"),
-                              h6(HTML("The package automatically calculates EC50 values with at least one value per dilution, but please ensure that your data are relevant (e.g. number of replicates and dilutions)"), style = "text-align: center; color: red; font-weight: bold;")
+                              h6(HTML("The package automatically calculates EC50 values with at least one value per dilution, but please ensure that your data are relevant (e.g. number of dilutions, biological replicates and set)"), style = "text-align: center; color: red; font-weight: bold;")
                             )
                           )
                  ), # Fermeture du panel "Plot"
@@ -531,6 +553,24 @@ example.biolutoxR <- function() {
 
 
 
+    output$img_pckg <- renderImage({
+      path_to_png <- "img/logo.png"
+      list(src = path_to_png,
+           width = "92.025",
+           height = "105.345")
+    }, deleteFile = FALSE)
+    
+    
+    
+    output$img <- renderImage({
+      path_to_png <- "img/img.png"
+      list(src = path_to_png,
+           width = "931.35",
+           height = "449.55")
+    }, deleteFile = FALSE)
+  
+  
+  
     # Valeurs par défaut pour l'onglet "Scheme" pour l'exemple
     default_values_list_scheme <-
       list(
@@ -834,7 +874,7 @@ example.biolutoxR <- function() {
       checkboxInput("filter_t1", input$t_input_t1, value = FALSE)
     })
     output$dynamic_filter_t1_2 <- renderUI({
-      checkboxInput("filter_t1_2", input$t_input_t1, value = TRUE)
+      checkboxInput("filter_t1_2", input$t_input_t1, value = FALSE)
     })
     
     
@@ -849,7 +889,7 @@ example.biolutoxR <- function() {
       checkboxInput("filter_t2", input$t_input_t2, value = FALSE)
     })
     output$dynamic_filter_t2_2 <- renderUI({
-      checkboxInput("filter_t2_2", input$t_input_t2, value = TRUE)
+      checkboxInput("filter_t2_2", input$t_input_t2, value = FALSE)
     })
     
     
@@ -1084,7 +1124,9 @@ example.biolutoxR <- function() {
             }
 
           observe({
-            sol_names <- unique(final_data_corrected()$sol)
+            data <- final_data_corrected() %>% 
+              filter(sol != input$neg_control)
+            sol_names <- unique(data$sol)
             updateSelectInput(session, "sol", choices = sol_names)
           })
 
@@ -1179,7 +1221,7 @@ example.biolutoxR <- function() {
 
         checkbox_group <- checkboxGroupInput(
           inputId = "selected_dilutions",
-          label = "Dilutions to include:",
+          label = "Dilution(s) to include:",
           choices = unique_dilutions,
           selected = unique_dilutions
         )
@@ -1230,7 +1272,15 @@ example.biolutoxR <- function() {
           geom_jitter(alpha = 0.5, position = position_dodge(width = 0.85)) +
           stat_summary(fun = "mean", geom = "point", shape = 4, size = 3, position = position_dodge(width = 0.85)) +
           theme_test() +
-          theme(text = element_text(size = 20))
+          theme(axis.text = element_text(color = "black", size = 12, face = "italic"),
+                axis.title = element_text(color = "black", size = 18),
+                axis.title.x = element_text(margin = margin(t = 13)),
+                axis.title.y = element_text(margin = margin(r = 13)),
+                legend.text = element_text(color = "black", size = 12),
+                legend.title = element_text(color = "black", size = 12),
+                legend.position = "top",
+                legend.justification.top = "right",
+                panel.border = element_rect(colour = "black", fill=NA, size=1))
         print(p_data)
 
       })
@@ -1285,7 +1335,7 @@ example.biolutoxR <- function() {
         ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
         table_ec <- toxicity_data_table(ec_data, substance = input$sol)
         ec_X_value <- toxicity_data_ecX(table_ec, X = input$ecX_input_value)
-        paste0("More specifically, bacterial bioluminescence was inhibited for ",  input$ecX_input_value, "% of organisms the batch exposed to the ", input$sol, " at a dilution of ", ec_X_value, ".")
+        paste0("Concretely, bacterial bioluminescence production was inhibited by ",  input$ecX_input_value, "% at a dilution percentage of ", ec_X_value, " of the solution of interest (here, ", input$sol, ") after a considered exposure time (depending on the time(s) selected).")
       }, error = function(e) {
         "Changer de substance"
       })
