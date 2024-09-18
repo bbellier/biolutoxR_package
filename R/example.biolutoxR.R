@@ -165,11 +165,11 @@ example.biolutoxR <- function() {
       left_join(
         data %>%
           mutate(biolu = as.numeric(biolu)) %>%
-          filter(sol_type == as.character(neg)) %>%
+          filter(sol == as.character(neg)) %>%
           group_by(time, set) %>%
-          summarise(mean_biolu_nacl = round(mean(biolu, na.rm = TRUE), 2), .groups = "drop"),
+          summarise(biolu_mean_neg_control = round(mean(biolu, na.rm = TRUE), 2), .groups = "drop"),
         by = c("time", "set")) %>%
-      mutate(biolu_corr = biolu*100/mean_biolu_nacl,
+      mutate(biolu_corr = biolu*100/biolu_mean_neg_control,
              biolu_corr = round(biolu_corr, 2),
              perc_inhib = 100-biolu_corr,
              perc_inhib = round(perc_inhib, 2)) %>%
@@ -186,8 +186,8 @@ example.biolutoxR <- function() {
   toxicity_data_table <- function(data, substance = NA) {
     table_ec <- data %>%
       filter(!is.na(perc_inhib_corr)) %>%
-      filter(sol_type == as.character(substance)) %>%
-      group_by(sol_type, dil) %>%
+      filter(sol == as.character(substance)) %>%
+      group_by(sol, dil) %>%
       summarise(mean_perc_inhib_corr = mean(perc_inhib_corr, na.rm = TRUE)) %>%
       ungroup()
     return(table_ec)
@@ -437,11 +437,11 @@ example.biolutoxR <- function() {
 
                               h5(HTML("Select variables:")),
                               selectInput("x_variable", "Variable X",
-                                          choices = c("sol_type", "dil", "rep_bio", "name", "id", "time", "set", "manip_name")),
+                                          choices = c("sol", "dil", "rep_bio", "sol_sh", "id", "time", "set", "manip_name")),
                               selectInput("y_variable", "Variable Y",
-                                          choices = c("biolu", "mean_biolu_nacl", "biolu_corr", "perc_inhib", "perc_inhib_corr")),
+                                          choices = c("biolu", "biolu_mean_neg_control", "biolu_corr", "perc_inhib", "perc_inhib_corr")),
                               selectInput("color_variable", "Color",
-                                          choices = c("sol_type", "dil", "rep_bio", "name", "id", "time", "set", "manip_name"))
+                                          choices = c("sol", "dil", "rep_bio", "sol_sh", "id", "time", "set", "manip_name"))
                             ),
                             column(
                               width = 8,
@@ -477,7 +477,7 @@ example.biolutoxR <- function() {
                               br(),
 
                               h5(HTML("Select the variable of interest:")),
-                              selectInput("sol_type", "Variable:", choices = NULL, selectize = FALSE),
+                              selectInput("sol", "Variable:", choices = NULL, selectize = FALSE),
 
                               br(),
 
@@ -878,10 +878,10 @@ example.biolutoxR <- function() {
 
 
 
-    # Valeur de "sol_type" pour l'exemple
+    # Valeur de "sol" pour l'exemple
     observe({
-      if (is.null(input$sol_type) || input$sol_type == "") {
-        updateTextInput(session, "sol_type", value = "Substance A")
+      if (is.null(input$sol) || input$sol == "") {
+        updateTextInput(session, "sol", value = "Substance A")
       }
     })
 
@@ -893,7 +893,7 @@ example.biolutoxR <- function() {
 
     # Adaptation des matrices "Scheme"
     output$matrix_scheme <- renderUI({
-      create_matrix("Scheme_Set", input$n_col, input$n_row, input, "sol_type,dil,rep_bio,name", default_values_list_scheme)
+      create_matrix("Scheme_Set", input$n_col, input$n_row, input, "sol,dil,rep_bio,sol_sh", default_values_list_scheme)
     })
 
 
@@ -973,7 +973,7 @@ example.biolutoxR <- function() {
           separate(col = matrix, into = c("matrix", "set", "set_value"), sep = "_") %>%
           mutate(set = paste0(set, " ", set_value)) %>%
           dplyr::select(-c(matrix, row, column, set_value)) %>%
-          separate(col = scheme_value, into = c("sol_type", "dil", "rep_bio", "name"), sep = ",")
+          separate(col = scheme_value, into = c("sol", "dil", "rep_bio", "sol_sh"), sep = ",")
 
         t1 <- extract_matrix_values("Time 1_Set", input$n_col, input$n_row, input) %>%
           mutate(id = paste0(row, column)) %>%
@@ -1010,8 +1010,8 @@ example.biolutoxR <- function() {
         final_data$manip_name <- input$manip_name
         final_data_corrected <- correct_final_data(final_data, input$neg_control)
         final_data_corrected <- final_data_corrected %>% filter(!is.na(biolu))
-        final_data_corrected <- final_data_corrected %>% dplyr::select(c(manip_name, set, time, id, sol_type, name, dil, rep_bio,
-                                                                         biolu, mean_biolu_nacl, biolu_corr, perc_inhib, perc_inhib_corr))
+        final_data_corrected <- final_data_corrected %>% dplyr::select(c(manip_name, set, time, id, sol, sol_sh, dil, rep_bio,
+                                                                         biolu, biolu_mean_neg_control, biolu_corr, perc_inhib, perc_inhib_corr))
         assign("final_data_corrected", final_data_corrected, envir = .GlobalEnv)
 
         return(final_data_corrected)
@@ -1084,8 +1084,8 @@ example.biolutoxR <- function() {
             }
 
           observe({
-            sol_types <- unique(final_data_corrected()$sol_type)
-            updateSelectInput(session, "sol_type", choices = sol_types)
+            sol_names <- unique(final_data_corrected()$sol)
+            updateSelectInput(session, "sol", choices = sol_names)
           })
 
           scheme <- extract_matrix_values("Scheme_Set", input$n_col, input$n_row, input) %>%
@@ -1094,7 +1094,7 @@ example.biolutoxR <- function() {
             separate(col = matrix, into = c("matrix", "set", "set_value"), sep = "_") %>%
             mutate(set = paste0(set, " ", set_value)) %>%
             dplyr::select(-c(matrix, row, column, set_value)) %>%
-            separate(col = scheme_value, into = c("sol_type", "dil", "rep_bio", "name"), sep = ",")
+            separate(col = scheme_value, into = c("sol", "dil", "rep_bio", "sol_sh"), sep = ",")
 
           t1 <- extract_matrix_values("Time 1_Set", input$n_col, input$n_row, input) %>%
             mutate(id = paste0(row, column)) %>%
@@ -1128,8 +1128,8 @@ example.biolutoxR <- function() {
           final_data$manip_name <- input$manip_name
           final_data_corrected <- correct_final_data(final_data, input$neg_control)
           final_data_corrected <- final_data_corrected %>% filter(!is.na(biolu))
-          final_data_corrected <- final_data_corrected %>% dplyr::select(c(manip_name, set, time, id, sol_type, name, dil, rep_bio,
-                                                                           biolu, mean_biolu_nacl, biolu_corr, perc_inhib, perc_inhib_corr))
+          final_data_corrected <- final_data_corrected %>% dplyr::select(c(manip_name, set, time, id, sol, sol_sh, dil, rep_bio,
+                                                                           biolu, biolu_mean_neg_control, biolu_corr, perc_inhib, perc_inhib_corr))
           final_data_corrected <- final_data_corrected %>% arrange(dil)
 
           niveaux <- sort(as.numeric(unique(final_data_corrected$dil)))
@@ -1142,9 +1142,9 @@ example.biolutoxR <- function() {
 
     # Sélectionner certaines variables par défaut pour le graphique
     observe({
-      updateSelectInput(session, "x_variable", choices = c("sol_type", "dil", "rep_bio", "name", "id", "time", "set", "manip_name"), selected = "sol_type")
-      updateSelectInput(session, "y_variable", choices = c("biolu", "mean_biolu_nacl", "biolu_corr", "perc_inhib", "perc_inhib_corr"), selected = "perc_inhib_corr")
-      updateSelectInput(session, "color_variable", choices = c("sol_type", "dil", "rep_bio", "name", "id", "time", "set", "manip_name"), selected = "dil")
+      updateSelectInput(session, "x_variable", choices = c("sol", "dil", "rep_bio", "sol_sh", "id", "time", "set", "manip_name"), selected = "sol")
+      updateSelectInput(session, "y_variable", choices = c("biolu", "biolu_mean_neg_control", "biolu_corr", "perc_inhib", "perc_inhib_corr"), selected = "perc_inhib_corr")
+      updateSelectInput(session, "color_variable", choices = c("sol", "dil", "rep_bio", "sol_sh", "id", "time", "set", "manip_name"), selected = "dil")
     })
 
 
@@ -1154,7 +1154,7 @@ example.biolutoxR <- function() {
 
       renderUI({
 
-        unique_substances <- unique(final_data_corrected()$sol_type)
+        unique_substances <- unique(final_data_corrected()$sol)
 
         checkbox_group <- checkboxGroupInput(
           inputId = "selected_substances",
@@ -1220,7 +1220,7 @@ example.biolutoxR <- function() {
         selected_substances <- input$selected_substances
 
         if (!is.null(selected_substances) && length(selected_substances) > 0) {
-          data_plot <- data_plot %>% filter(sol_type %in% selected_substances)
+          data_plot <- data_plot %>% filter(sol %in% selected_substances)
         }
 
         p_data <- ggplot(data_plot, aes_string(x = input$x_variable,
@@ -1249,7 +1249,7 @@ example.biolutoxR <- function() {
         tryCatch({
           ec_data <- final_data_corrected()
           ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
-          table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
+          table_ec <- toxicity_data_table(ec_data, substance = input$sol)
           toxicity_data_table_plot(table_ec)
         }, error = function(e) {
           plot.new()
@@ -1266,7 +1266,7 @@ example.biolutoxR <- function() {
       tryCatch({
         ec_data <- final_data_corrected()
         ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
-        table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
+        table_ec <- toxicity_data_table(ec_data, substance = input$sol)
         ec_X_value <- toxicity_data_ecX(table_ec, X = input$ecX_input_value)
         paste0("EC", input$ecX_input_value, " value: ", ec_X_value)
       }, error = function(e) {
@@ -1283,9 +1283,9 @@ example.biolutoxR <- function() {
       tryCatch({
         ec_data <- final_data_corrected()
         ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
-        table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
+        table_ec <- toxicity_data_table(ec_data, substance = input$sol)
         ec_X_value <- toxicity_data_ecX(table_ec, X = input$ecX_input_value)
-        paste0("More specifically, bacterial bioluminescence was inhibited for ",  input$ecX_input_value, "% of organisms the batch exposed to the ", input$sol_type, " at a dilution of ", ec_X_value, ".")
+        paste0("More specifically, bacterial bioluminescence was inhibited for ",  input$ecX_input_value, "% of organisms the batch exposed to the ", input$sol, " at a dilution of ", ec_X_value, ".")
       }, error = function(e) {
         "Changer de substance"
       })
@@ -1324,6 +1324,5 @@ example.biolutoxR <- function() {
 
 # Run la function example.biolutoxR()
 example.biolutoxR()
-
 
 
