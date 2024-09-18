@@ -15,7 +15,7 @@ You can install the biolutoxR package like so:
 
 ``` r
 # install.packages("pak")
-# pak::pkg_install("bbellier/biolutoxR_package")
+# pak::pkg_install("https://github.com/bbellier/biolutoxR_package")
 ```
 
 You can loading the biolutoxR package like so:

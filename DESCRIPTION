@@ -3,7 +3,7 @@ Type: Package
 Title: To facilitate data analysis of toxicity test based on bacterial bioluminescence inhibition 
 Version: 0.1.0
 Author: Bellier Benjamin and Le Picard Coralie
-Maintainer: The package maintainer <https://bbellier.github.io/biolutoxR_website/>
+Maintainer: Description: The package maintainer <yourself@somewhere.net>
 Description: In prep.
 License: none
 Encoding: UTF-8
