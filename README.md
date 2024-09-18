@@ -14,7 +14,9 @@ test based on bacterial bioluminescence inhibition .
 You can install the biolutoxR package like so:
 
 ``` r
-# install.packages("devtools")
+if (!require(devtools)) {
+    install.packages("devtools")
+}
 devtools::install_github("bbellier/biolutoxR_package", force = TRUE)
 ```
 

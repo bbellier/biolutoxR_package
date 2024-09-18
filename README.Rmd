@@ -24,7 +24,9 @@ The goal of biolutoxR is to facilitate the data analysis of toxicity test based 
 You can install the biolutoxR package like so: 
 
 ```{r install, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
-# install.packages("devtools")
+if (!require(devtools)) {
+    install.packages("devtools")
+}
 devtools::install_github("bbellier/biolutoxR_package", force = TRUE)
 ```
 
