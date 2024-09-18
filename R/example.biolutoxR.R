@@ -269,16 +269,16 @@ example.biolutoxR <- function() {
 
 
   # ---- Fonction pour filtrer les données "time" ---------------------------- #
-  filter_data <- function(data, filter_t5, filter_t15, filter_t30) {
+  filter_data <- function(data, filter_t1, filter_t2, filter_t3) {
     filtered_data <- data
-    if (!filter_t5) {
-      filtered_data <- filtered_data %>% filter(time != "Time 5")
+    if (!filter_t1) {
+      filtered_data <- filtered_data %>% filter(time != "Time 1")
     }
-    if (!filter_t15) {
-      filtered_data <- filtered_data %>% filter(time != "Time 15")
+    if (!filter_t2) {
+      filtered_data <- filtered_data %>% filter(time != "Time 2")
     }
-    if (!filter_t30) {
-      filtered_data <- filtered_data %>% filter(time != "Time 30")
+    if (!filter_t3) {
+      filtered_data <- filtered_data %>% filter(time != "Time 3")
     }
     return(filtered_data)
   }
@@ -372,29 +372,32 @@ example.biolutoxR <- function() {
 
                  ), # Fermeture du panel "Scheme"
 
-                 # --> Panel "Time 5"
-                 tabPanel("Time 5",
+                 # --> Panel "Time 1"
+                 tabPanel("Time 1",
 
-                          h3(HTML("<b>Time 5 matrix/matrices:</b>")),
-                          uiOutput("matrix_t5")
+                          h3(HTML("<b>Time 1 matrix/matrices:</b>")),
+                          textInput("t_input_t1", "Time (in min):"),
+                          uiOutput("matrix_t1")
 
-                 ), # Fermeture du panel "Time 5"
+                 ), # Fermeture du panel "Time 1"
 
-                 # --> Panel "Time 15"
-                 tabPanel("Time 15",
+                 # --> Panel "Time 2"
+                 tabPanel("Time 2",
 
-                          h3(HTML("<b>Time 15 matrix/matrices:</b>")),
-                          uiOutput("matrix_t15")
+                          h3(HTML("<b>Time 2 matrix/matrices:</b>")),
+                          textInput("t_input_t2", "Time (in min):"),
+                          uiOutput("matrix_t2")
 
-                 ), # Fermeture du panel "Time 15"
+                 ), # Fermeture du panel "Time 2"
 
-                 # --> Panel "Time 30"
-                 tabPanel("Time 30",
+                 # --> Panel "Time 3"
+                 tabPanel("Time 3",
 
-                          h3(HTML("<b>Time 30 matrix/matrices:</b>")),
-                          uiOutput("matrix_t30")
+                          h3(HTML("<b>Time 3 matrix/matrices:</b>")),
+                          textInput("t_input_t3", "Time (in min):"),
+                          uiOutput("matrix_t3")
 
-                 ), # Fermeture du panel "Time 30"
+                 ), # Fermeture du panel "Time 3"
 
                  # --> Panel "Table"
                  tabPanel("Table",
@@ -420,9 +423,9 @@ example.biolutoxR <- function() {
                               h4(HTML("Settings:")),
                               h5(HTML("Select time to conserve:")),
                               fluidRow(
-                                column(2, align = "left", checkboxInput("filter_t5", "T5", value = FALSE)),
-                                column(2, align = "left", checkboxInput("filter_t15", "T15", value = FALSE)),
-                                column(2, align = "left", checkboxInput("filter_t30", "T30", value = TRUE))
+                                column(2, align = "left", uiOutput("dynamic_filter_t1")),
+                                column(2, align = "left", uiOutput("dynamic_filter_t2")),
+                                column(2, align = "left", uiOutput("dynamic_filter_t3"))
                               ),
 
                               br(),
@@ -466,9 +469,9 @@ example.biolutoxR <- function() {
                               h4(HTML("Settings:")),
                               h5(HTML("Select time variables to conserve:")),
                               fluidRow(
-                                column(2, align = "left", checkboxInput("filter_t5_2", "T5", value = TRUE)),
-                                column(2, align = "left", checkboxInput("filter_t15_2", "T15", value = TRUE)),
-                                column(2, align = "left", checkboxInput("filter_t30_2", "T30", value = TRUE))
+                                column(2, align = "left", uiOutput("dynamic_filter_t1_2")),
+                                column(2, align = "left", uiOutput("dynamic_filter_t2_2")),
+                                column(2, align = "left", uiOutput("dynamic_filter_t3_2"))
                               ),
 
                               br(),
@@ -599,8 +602,8 @@ example.biolutoxR <- function() {
 
 
 
-    # Valeurs par défaut pour l'onglet "Time 5" pour l'exemple
-    default_values_list_t5 <-
+    # Valeurs par défaut pour l'onglet "Time 1" pour l'exemple
+    default_values_list_t1 <-
       list(
         list(
           "A1" = "100",
@@ -670,8 +673,8 @@ example.biolutoxR <- function() {
 
 
 
-    # Valeurs par défaut pour l'onglet "Time 15" pour l'exemple
-    default_values_list_t15 <-
+    # Valeurs par défaut pour l'onglet "Time 2" pour l'exemple
+    default_values_list_t2 <-
       list(
         list(
           "A1" = "100",
@@ -741,8 +744,8 @@ example.biolutoxR <- function() {
 
 
 
-    # Valeurs par défaut pour l'onglet "Time 30" pour l'exemple
-    default_values_list_t30 <-
+    # Valeurs par défaut pour l'onglet "Time 3" pour l'exemple
+    default_values_list_t3 <-
       list(
         list(
           "A1" = "100",
@@ -818,6 +821,51 @@ example.biolutoxR <- function() {
         updateTextInput(session, "manip_name", value = "Example")
       }
     })
+    
+    
+    
+    # Valeur de T1 pour l'exemple
+    observe({
+      if (is.null(input$t_input_t1) || input$t_input_t1 == "") {
+        updateTextInput(session, "t_input_t1", value = "5")
+      }
+    })
+    output$dynamic_filter_t1 <- renderUI({
+      checkboxInput("filter_t1", input$t_input_t1, value = FALSE)
+    })
+    output$dynamic_filter_t1_2 <- renderUI({
+      checkboxInput("filter_t1_2", input$t_input_t1, value = TRUE)
+    })
+    
+    
+    
+    # Valeur de T2 pour l'exemple
+    observe({
+      if (is.null(input$t_input_t2) || input$t_input_t2 == "") {
+        updateTextInput(session, "t_input_t2", value = "15")
+      }
+    })
+    output$dynamic_filter_t2 <- renderUI({
+      checkboxInput("filter_t2", input$t_input_t2, value = FALSE)
+    })
+    output$dynamic_filter_t2_2 <- renderUI({
+      checkboxInput("filter_t2_2", input$t_input_t2, value = TRUE)
+    })
+    
+    
+    
+    # Valeur de T3 pour l'exemple
+    observe({
+      if (is.null(input$t_input_t3) || input$t_input_t3 == "") {
+        updateTextInput(session, "t_input_t3", value = "30")
+      }
+    })
+    output$dynamic_filter_t3 <- renderUI({
+      checkboxInput("filter_t3", input$t_input_t3, value = TRUE)
+    })
+    output$dynamic_filter_t3_2 <- renderUI({
+      checkboxInput("filter_t3_2", input$t_input_t3, value = TRUE)
+    })
 
 
 
@@ -850,23 +898,23 @@ example.biolutoxR <- function() {
 
 
 
-    # Adaptation des matrices "Time 5"
-    output$matrix_t5 <- renderUI({
-      create_matrix("Time 5_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t5)
+    # Adaptation des matrices "Time 1"
+    output$matrix_t1 <- renderUI({
+      create_matrix("Time 1_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t1)
     })
 
 
 
-    # Adaptation des matrices "Time 15"
-    output$matrix_t15 <- renderUI({
-      create_matrix("Time 15_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t15)
+    # Adaptation des matrices "Time 2"
+    output$matrix_t2 <- renderUI({
+      create_matrix("Time 2_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t2)
     })
 
 
 
-    # Adaptation des matrices "Time 30"
-    output$matrix_t30 <- renderUI({
-      create_matrix("Time 30_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t30)
+    # Adaptation des matrices "Time 3"
+    output$matrix_t3 <- renderUI({
+      create_matrix("Time 3_Set", input$n_col, input$n_row, input, "biolu", default_values_list_t3)
     })
 
 
@@ -927,33 +975,36 @@ example.biolutoxR <- function() {
           dplyr::select(-c(matrix, row, column, set_value)) %>%
           separate(col = scheme_value, into = c("sol_type", "dil", "rep_bio", "name"), sep = ",")
 
-        t5 <- extract_matrix_values("Time 5_Set", input$n_col, input$n_row, input) %>%
+        t1 <- extract_matrix_values("Time 1_Set", input$n_col, input$n_row, input) %>%
           mutate(id = paste0(row, column)) %>%
           rename(biolu = value) %>%
           dplyr::select(-c(row, column)) %>%
           separate(col = matrix, into = c("time", "set", "set_value"), sep = "_") %>%
           mutate(set = paste0(set, " ", set_value)) %>%
+          mutate(time = input$t_input_t1) %>%
           dplyr::select(-c(set_value))
 
-        t15 <- extract_matrix_values("Time 15_Set", input$n_col, input$n_row, input) %>%
+        t2 <- extract_matrix_values("Time 2_Set", input$n_col, input$n_row, input) %>%
           mutate(id = paste0(row, column)) %>%
           rename(biolu = value) %>%
           dplyr::select(-c(row, column)) %>%
           separate(col = matrix, into = c("time", "set", "set_value"), sep = "_") %>%
           mutate(set = paste0(set, " ", set_value)) %>%
+          mutate(time = input$t_input_t2) %>%
           dplyr::select(-c(set_value))
 
-        t30 <- extract_matrix_values("Time 30_Set", input$n_col, input$n_row, input) %>%
+        t3 <- extract_matrix_values("Time 3_Set", input$n_col, input$n_row, input) %>%
           mutate(id = paste0(row, column)) %>%
           rename(biolu = value) %>%
           dplyr::select(-c(row, column)) %>%
           separate(col = matrix, into = c("time", "set", "set_value"), sep = "_") %>%
           mutate(set = paste0(set, " ", set_value)) %>%
+          mutate(time = input$t_input_t3) %>%
           dplyr::select(-c(set_value))
 
-        data_5 <- merge(scheme, t5, by = c("id", "set"), all = TRUE)
-        data_15 <- merge(scheme, t15, by = c("id", "set"), all = TRUE)
-        data_30 <- merge(scheme, t30, by = c("id", "set"), all = TRUE)
+        data_5 <- merge(scheme, t1, by = c("id", "set"), all = TRUE)
+        data_15 <- merge(scheme, t2, by = c("id", "set"), all = TRUE)
+        data_30 <- merge(scheme, t3, by = c("id", "set"), all = TRUE)
 
         final_data <- rbind(data_5, data_15, data_30)
         final_data$manip_name <- input$manip_name
@@ -1045,7 +1096,7 @@ example.biolutoxR <- function() {
             dplyr::select(-c(matrix, row, column, set_value)) %>%
             separate(col = scheme_value, into = c("sol_type", "dil", "rep_bio", "name"), sep = ",")
 
-          t5 <- extract_matrix_values("Time 5_Set", input$n_col, input$n_row, input) %>%
+          t1 <- extract_matrix_values("Time 1_Set", input$n_col, input$n_row, input) %>%
             mutate(id = paste0(row, column)) %>%
             rename(biolu = value) %>%
             dplyr::select(-c(row, column)) %>%
@@ -1053,7 +1104,7 @@ example.biolutoxR <- function() {
             mutate(set = paste0(set, " ", set_value)) %>%
             dplyr::select(-c(set_value))
 
-          t15 <- extract_matrix_values("Time 15_Set", input$n_col, input$n_row, input) %>%
+          t2 <- extract_matrix_values("Time 2_Set", input$n_col, input$n_row, input) %>%
             mutate(id = paste0(row, column)) %>%
             rename(biolu = value) %>%
             dplyr::select(-c(row, column)) %>%
@@ -1061,7 +1112,7 @@ example.biolutoxR <- function() {
             mutate(set = paste0(set, " ", set_value)) %>%
             dplyr::select(-c(set_value))
 
-          t30 <- extract_matrix_values("Time 30_Set", input$n_col, input$n_row, input) %>%
+          t3 <- extract_matrix_values("Time 3_Set", input$n_col, input$n_row, input) %>%
             mutate(id = paste0(row, column)) %>%
             rename(biolu = value) %>%
             dplyr::select(-c(row, column)) %>%
@@ -1069,9 +1120,9 @@ example.biolutoxR <- function() {
             mutate(set = paste0(set, " ", set_value)) %>%
             dplyr::select(-c(set_value))
 
-          data_5 <- merge(scheme, t5, by = c("id", "set"), all = TRUE)
-          data_15 <- merge(scheme, t15, by = c("id", "set"), all = TRUE)
-          data_30 <- merge(scheme, t30, by = c("id", "set"), all = TRUE)
+          data_5 <- merge(scheme, t1, by = c("id", "set"), all = TRUE)
+          data_15 <- merge(scheme, t2, by = c("id", "set"), all = TRUE)
+          data_30 <- merge(scheme, t3, by = c("id", "set"), all = TRUE)
 
           final_data <- rbind(data_5, data_15, data_30)
           final_data$manip_name <- input$manip_name
@@ -1145,7 +1196,7 @@ example.biolutoxR <- function() {
       reactive({
 
         final_data_corrected <- final_data_corrected()
-        final_data_corrected <- filter_data(final_data_corrected, input$filter_t5, input$filter_t15, input$filter_t30)
+        final_data_corrected <- filter_data(final_data_corrected, input$filter_t1, input$filter_t2, input$filter_t3)
         selected_dilutions <- as.numeric(input$selected_dilutions)
         final_data_corrected <- filter_data_dil(final_data_corrected, selected_dilutions)
 
@@ -1164,7 +1215,7 @@ example.biolutoxR <- function() {
 
         data_plot <- correct_data_microtox_filtered()
         data_plot$dil = factor(data_plot$dil, levels = sort(as.numeric(unique(data_plot$dil))))
-        data_plot$time = factor(data_plot$time, levels = c("Time 5", "Time 15", "Time 30"))
+        data_plot$time = factor(data_plot$time, levels = c("Time 1", "Time 2", "Time 3"))
 
         selected_substances <- input$selected_substances
 
@@ -1197,7 +1248,7 @@ example.biolutoxR <- function() {
 
         tryCatch({
           ec_data <- final_data_corrected()
-          ec_data <- filter_data(ec_data, input$filter_t5_2, input$filter_t15_2, input$filter_t30_2)
+          ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
           table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
           toxicity_data_table_plot(table_ec)
         }, error = function(e) {
@@ -1214,7 +1265,7 @@ example.biolutoxR <- function() {
 
       tryCatch({
         ec_data <- final_data_corrected()
-        ec_data <- filter_data(ec_data, input$filter_t5_2, input$filter_t15_2, input$filter_t30_2)
+        ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
         table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
         ec_X_value <- toxicity_data_ecX(table_ec, X = input$ecX_input_value)
         paste0("EC", input$ecX_input_value, " value: ", ec_X_value)
@@ -1231,7 +1282,7 @@ example.biolutoxR <- function() {
 
       tryCatch({
         ec_data <- final_data_corrected()
-        ec_data <- filter_data(ec_data, input$filter_t5_2, input$filter_t15_2, input$filter_t30_2)
+        ec_data <- filter_data(ec_data, input$filter_t1_2, input$filter_t2_2, input$filter_t3_2)
         table_ec <- toxicity_data_table(ec_data, substance = input$sol_type)
         ec_X_value <- toxicity_data_ecX(table_ec, X = input$ecX_input_value)
         paste0("More specifically, bacterial bioluminescence was inhibited for ",  input$ecX_input_value, "% of organisms the batch exposed to the ", input$sol_type, " at a dilution of ", ec_X_value, ".")
@@ -1273,5 +1324,6 @@ example.biolutoxR <- function() {
 
 # Run la function example.biolutoxR()
 example.biolutoxR()
+
 
 
