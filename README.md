@@ -50,5 +50,5 @@ Also, to cite the use of this package, you can use the
 
 ``` r
 citation.biolutoxR()
-#> [1] "To cite this document: Le Picard, C. & Bellier, B. (2024). biolutoxR: An R-Shiny package for easy performing data analysis of a toxicity test based on bacterial bioluminescence inhibition. SoftwareX, XX(XX-XX). DOI. Also, in this site web : https://bbellier.github.io/biolutoxR_website/, you can find all about this package."
+#> [1] "To cite this document: in prep. Also, you can find all about this package in: https://bbellier.github.io/biolutoxR_website/."
 ```
