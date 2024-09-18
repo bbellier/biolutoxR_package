@@ -14,14 +14,14 @@ test based on bacterial bioluminescence inhibition .
 You can install the biolutoxR package like so:
 
 ``` r
-# install.packages("pak")
-# pak::pkg_install("https://github.com/bbellier/biolutoxR_package")
+# install.packages("devtools")
+devtools::install_github("bbellier/biolutoxR_package")
 ```
 
 You can loading the biolutoxR package like so:
 
 ``` r
-# library(biolutoxR)
+library(biolutoxR)
 ```
 
 ## Example
@@ -49,5 +49,6 @@ Also, to cite the use of this package, you can use the
 “citation.biolutoxR()” function:
 
 ``` r
-# citation.biolutoxR()
+citation.biolutoxR()
+#> [1] "To cite this document: Le Picard, C. & Bellier, B. (2024). biolutoxR: An R-Shiny package for easy performing data analysis of a toxicity test based on bacterial bioluminescence inhibition. SoftwareX, XX(XX-XX). DOI. Also, in this site web : https://bbellier.github.io/biolutoxR_website/, you can find all about this package."
 ```

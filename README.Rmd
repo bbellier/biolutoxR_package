@@ -24,14 +24,14 @@ The goal of biolutoxR is to facilitate the data analysis of toxicity test based 
 You can install the biolutoxR package like so: 
 
 ```{r install, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
-# install.packages("pak")
-# pak::pkg_install("bbellier/biolutoxR_package")
+# install.packages("devtools")
+devtools::install_github("bbellier/biolutoxR_package")
 ```
 
 You can loading the biolutoxR package like so: 
 
 ```{r loading}
-# library(biolutoxR)
+library(biolutoxR)
 ```
 
 
@@ -55,6 +55,6 @@ Please cite this package as:
 
 Also, to cite the use of this package, you can use the "citation.biolutoxR()" function:
 ```{r citation}
-# citation.biolutoxR()
+citation.biolutoxR()
 ```
 
