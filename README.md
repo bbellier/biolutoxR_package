@@ -35,6 +35,8 @@ An example with preloaded data is available by running the function
 # example.biolutoxR()
 ```
 
+## Run the app for your own data
+
 To enter your own data, you can use the “run.biolutoxR()” function:
 
 ``` r
