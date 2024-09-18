@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Bellier Benjamin and Le Picard Coralie
 Maintainer: Description: The package maintainer <yourself@somewhere.net>
 Description: In prep.
-License: none
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Imports:
