@@ -1,11 +1,4 @@
-# run.biolutoxR() function
-#
-# This is an example function named 'hello'
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
+# example.biolutoxR() function
 #
 # Some useful keyboard shortcuts for package authoring:
 #
@@ -22,6 +15,8 @@
 #' @import drc
 #' @import ed50
 #' @import openxlsx
+
+
 
 # ############################################################################ #
 # ------------------------ FONCTION example.biolutoxR() ------------------------
@@ -162,7 +157,7 @@ example.biolutoxR <- function() {
 
   # ---- Fonction pour corriger les données finales -------------------------- #
   correct_final_data <- function(data, neg) {
-    correct_data_microtox <- data %>%
+    correct_data_biolutox <- data %>%
       mutate(biolu = as.numeric(biolu)) %>%
       left_join(
         data %>%
@@ -178,7 +173,7 @@ example.biolutoxR <- function() {
       mutate(perc_inhib_corr = ifelse(perc_inhib > 100, 100, perc_inhib),
              perc_inhib_corr = ifelse(perc_inhib < 0, 0, perc_inhib),
              perc_inhib_corr = round(perc_inhib_corr, 2))
-    assign("correct_data_microtox", correct_data_microtox, envir = .GlobalEnv)
+    assign("correct_data_biolutox", correct_data_biolutox, envir = .GlobalEnv)
   }
   # -------------------------------------------------------------------------- #
 
@@ -380,7 +375,8 @@ example.biolutoxR <- function() {
                           p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
                           p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
                           
-                          
+                          br(),
+                          br(),
                           br(),
                           
                           h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
@@ -401,7 +397,6 @@ example.biolutoxR <- function() {
                             column(2, align = "center", numericInput("n_col", "Number of columns:", min = 1, max = 20, value = 5)),
                             column(2, align = "center", textInput("neg_control", "Negative control name:"))
                           ),
-                          
                           
                           br(),
                           
@@ -577,7 +572,8 @@ example.biolutoxR <- function() {
     ### a. Définition des valeurs par défaut ####
 
 
-
+    
+    # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
       path_to_png <- "img/logo.png"
       list(src = path_to_png,
@@ -587,6 +583,7 @@ example.biolutoxR <- function() {
     
     
     
+    # Valeurs de l'img "img"
     output$img <- renderImage({
       path_to_png <- "img/img.png"
       list(src = path_to_png,
@@ -1268,7 +1265,7 @@ example.biolutoxR <- function() {
 
 
     # Adapter les données en fonction des choix pour le graphique
-    correct_data_microtox_filtered <-
+    correct_data_biolutox_filtered <-
 
       reactive({
 
@@ -1290,7 +1287,7 @@ example.biolutoxR <- function() {
 
         req(input$x_variable, input$y_variable, input$color_variable)
 
-        data_plot <- correct_data_microtox_filtered()
+        data_plot <- correct_data_biolutox_filtered()
         data_plot$dil = factor(data_plot$dil, levels = sort(as.numeric(unique(data_plot$dil))))
         data_plot$time = factor(data_plot$time, levels = c("Time 1", "Time 2", "Time 3"))
 
