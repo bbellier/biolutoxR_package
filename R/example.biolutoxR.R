@@ -21,7 +21,7 @@
 #' @import tidyverse
 #' @import drc
 #' @import ed50
-
+#' @import openxlsx
 
 # ############################################################################ #
 # ------------------------ FONCTION example.biolutoxR() ------------------------
@@ -45,7 +45,8 @@ example.biolutoxR <- function() {
     "shinythemes",
     "tidyverse",
     "drc",
-    "ed50"
+    "ed50",
+    "openxlsx"
   )
   # -------------------------------------------------------------------------- #
 
@@ -148,7 +149,8 @@ example.biolutoxR <- function() {
               div(class = "cellInput", textInput(inputId = cell_id, label = NULL, placeholder = label_box, value = default_val))
             })
           )
-        })
+        }),
+        br()
       )
       div(class = "matrice-container", matrix_ui)
     })
@@ -335,10 +337,13 @@ example.biolutoxR <- function() {
                           ),
 
                           br(),
+                          br(),
 
                           h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
                           p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
                           p("An image for resume the manipulation:"),   
+                          
+                          br(),
                           
                           imageOutput("img", height = 300),
                           
@@ -350,30 +355,36 @@ example.biolutoxR <- function() {
                           br(),
                           br(),
                           br(),
+                          br(),
 
                           h3(HTML("<b>How use this app?</b>")),
-                          h4(HTML("<b>> Scheme tab:</b>")),
+                          h4(HTML("<i>> Scheme tab:</i>")),
                           p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
                           p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
-                          h4(HTML("<b>> Times tab:</b>")),
+                          h4(HTML("<i>> Times tab:</i>")),
                           p("- Complete the field with the relevant exposure time."),
                           p("- Complete matrices based on the bioluminescence values obtained during the test."),
-                          h4(HTML("<b>> Table tab:</b>")),
+                          h4(HTML("<i>> Table tab:</i>")),
                           p("- This tab print the cleaned data."),
                           p("- The cleaned final data table can be exported in '.csv' format."),
-                          h4(HTML("<b>> Plot tab:</b>")),
+                          h4(HTML("<i>> Plot tab:</i>")),
                           p("- To visualize test results."),
                           p("- To print dose-response curve."),
                           p("- To calculate ECx values."),
-                          h4(HTML("<b>> Exit tab:</b>")),
+                          h4(HTML("<i>> Exit tab:</i>")),
                           p("- To quit this application."),
 
                           br(),
 
                           h3(HTML("<b style='color: red;'>Warning</b>")),
                           p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
-                          p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>"))
-
+                          p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
+                          
+                          
+                          br(),
+                          
+                          h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
+                          
                  ), # Fermeture du panel "Présentation"
 
                  # --> Panel "Scheme"
@@ -390,6 +401,10 @@ example.biolutoxR <- function() {
                             column(2, align = "center", numericInput("n_col", "Number of columns:", min = 1, max = 20, value = 5)),
                             column(2, align = "center", textInput("neg_control", "Negative control name:"))
                           ),
+                          
+                          
+                          br(),
+                          
                           h3(HTML("<b>Scheme matrix/matrices:</b>")),
                           uiOutput("matrix_scheme")
 
@@ -400,6 +415,9 @@ example.biolutoxR <- function() {
 
                           h3(HTML("<b>Time 1 matrix/matrices:</b>")),
                           textInput("t_input_t1", "Time (in min):"),
+                          
+                          br(), 
+                          
                           uiOutput("matrix_t1")
 
                  ), # Fermeture du panel "Time 1"
@@ -409,6 +427,9 @@ example.biolutoxR <- function() {
 
                           h3(HTML("<b>Time 2 matrix/matrices:</b>")),
                           textInput("t_input_t2", "Time (in min):"),
+                          
+                          br(), 
+                          
                           uiOutput("matrix_t2")
 
                  ), # Fermeture du panel "Time 2"
@@ -418,6 +439,9 @@ example.biolutoxR <- function() {
 
                           h3(HTML("<b>Time 3 matrix/matrices:</b>")),
                           textInput("t_input_t3", "Time (in min):"),
+                          
+                          br(), 
+                          
                           uiOutput("matrix_t3")
 
                  ), # Fermeture du panel "Time 3"
@@ -427,6 +451,7 @@ example.biolutoxR <- function() {
 
                           h3(HTML("<b>Final data table:</b>")),
                           downloadButton("download_table_csv", "Download CSV"),
+                          downloadButton("download_table_xlsx", "Download XLSX"),
 
                           br(),
                           br(),
@@ -1074,6 +1099,16 @@ example.biolutoxR <- function() {
     output$download_table_csv <- downloadHandler(
       filename = function() {"final_data_table.csv"},
       content = function(file) {write.csv(final_data_corrected(), file, row.names = FALSE)}
+    )
+    
+    
+    
+    # Exportation de la table en format ".xlsx"
+    output$download_table_xlsx <- downloadHandler(
+      filename = function() {"final_data_table.xlsx"},
+      content = function(file) {
+        openxlsx::write.xlsx(final_data_corrected(), file, rowNames = FALSE)
+      }
     )
 
 
