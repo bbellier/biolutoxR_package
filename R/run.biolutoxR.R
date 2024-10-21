@@ -199,8 +199,8 @@ run.biolutoxR <- function() {
   toxicity_data_ecX <- function(data, X = 50) {
     drm_model <- drm(mean_perc_inhib_corr ~ as.numeric(dil), data = data,
                      fct = LL.4(fixed=c(NA,0,100,NA),names=c("Slope","Lower Limit","Upper Limit","ED50")))
-    ec <- data.frame(ED(drm_model, c(X)))
-    ec_value <- round(ec$`Estimate`,2)
+    ec <- data.frame(ED(drm_model, c(X), interval = "delta"))
+    ec_value <- paste0(round(ec$`Estimate`,2), " +/- ", round(ec$Std..Error,2), " (95% confidence interval: ", round(ec[1, "Lower"], 2), "-", round(ec[1, "Upper"], 2), ")")
     assign("ec", ec, envir = .GlobalEnv)
     return(ec_value)
   }
