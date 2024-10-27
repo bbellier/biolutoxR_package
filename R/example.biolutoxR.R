@@ -41,7 +41,8 @@ example.biolutoxR <- function() {
     "tidyverse",
     "drc",
     "ed50",
-    "openxlsx"
+    "openxlsx",
+    "remotes"
   )
   # -------------------------------------------------------------------------- #
 
@@ -52,9 +53,10 @@ example.biolutoxR <- function() {
   for (package in required_packages) {
     if (!requireNamespace(package, quietly = TRUE)) {
       install.packages(package)
-    } else {
-      library(package, character.only = TRUE)
+    } else if (package == "ggplot2" && packageVersion("ggplot2") != "3.5.1") {
+      remotes::install_version("ggplot2", version = "3.5.1")
     }
+    library(package, character.only = TRUE)
   }
   # -------------------------------------------------------------------------- #
 
