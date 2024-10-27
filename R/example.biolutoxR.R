@@ -577,8 +577,8 @@ example.biolutoxR <- function() {
     
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
-      path_to_png <- "img/logo.png"
-      list(src = path_to_png,
+      path_to_png_1 <- "R/img/logo.png"
+      list(src = path_to_png_1,
            width = "92.025",
            height = "105.345")
     }, deleteFile = FALSE)
@@ -587,8 +587,8 @@ example.biolutoxR <- function() {
     
     # Valeurs de l'img "img"
     output$img <- renderImage({
-      path_to_png <- "img/img.png"
-      list(src = path_to_png,
+      path_to_png_2 <- "R/img/img.png"
+      list(src = path_to_png_2,
            width = "931.35",
            height = "449.55")
     }, deleteFile = FALSE)
