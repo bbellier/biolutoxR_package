@@ -590,10 +590,8 @@ run.biolutoxR <- function() {
     
     # Valeurs de l'img "img"
     output$img <- renderImage({
-      path_to_png_2 <- "img/img.jpg"
-      list(src = path_to_png_2,
-           width = "931.35",
-           height = "449.55")
+      path_to_png_2 <- "img/img.png"
+      list(src = path_to_png_2)
     }, deleteFile = FALSE)
     
     
