@@ -312,6 +312,7 @@ run.biolutoxR <- function() {
 
 
   # ---- UI part ------------------------------------------------------------- #
+  
   biolutoxR_ui <-
 
     # --> FluidPage
@@ -583,7 +584,7 @@ run.biolutoxR <- function() {
 
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
-      list(src = "www/logo.png",
+      list(src = paste0(getwd(), "/www/logo.png"),
            width = "92",
            height = "105")
     }, deleteFile = FALSE)
