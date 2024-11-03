@@ -322,11 +322,11 @@ run.biolutoxR <- function() {
       navbarPage("biolutoxR",
                  
                  # Img
-                 tags$head(tags$style(HTML("
-                 .img-small {
-                 width: 50px;
-                 height: 50px;
-                 }"))),
+                 # tags$head(tags$style(HTML("
+                 # .img-small {
+                 # width: 50px;
+                 # height: 50px;
+                 # }"))),
                  
                  # --> Panel "Présentation"
                  tabPanel("Presentation",
@@ -334,7 +334,7 @@ run.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              div(class = "img-small", imageOutput("img_pckg"))
+                              imageOutput("img_pckg", width = 50, height = 50)
                             ),
                             column(
                               width = 11,
@@ -352,7 +352,7 @@ run.biolutoxR <- function() {
                           
                           br(),
                           
-                          imageOutput("img", height = 300),
+                          imageOutput("img", width = 100, height = 300),
                           
                           br(),
                           br(),
@@ -586,21 +586,19 @@ run.biolutoxR <- function() {
 
 
     # Valeurs de l'img "img_pckg"
-    output$img_pckg <- renderImage({
-      path_to_png_1 <- "www/logo.png"
-      list(src = path_to_png_1,
-           width = 92.025,
-           height = 105.345)
+    output$img_pckg <- renderImage({ 
+      list(src = "www/logo.png",
+           width = "92",
+           height = "105")
     }, deleteFile = FALSE)
     
     
     
     # Valeurs de l'img "img"
     output$img <- renderImage({
-      path_to_png_2 <- "www/img.png"
-      list(src = path_to_png_2,
-           width = "931.35",
-           height = "449.55")
+      list(src = "www/img.png",
+           width = "931",
+           height = "449")
     }, deleteFile = FALSE)
     
     
