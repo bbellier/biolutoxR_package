@@ -321,13 +321,20 @@ run.biolutoxR <- function() {
       # --> Création d'une barre de navigation
       navbarPage("biolutoxR",
                  
+                 # Img
+                 tags$head(tags$style(HTML("
+                 .img-small {
+                 width: 50px;
+                 height: 50px;
+                 }"))),
+                 
                  # --> Panel "Présentation"
                  tabPanel("Presentation",
                           
                           fluidRow(
                             column(
                               width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
+                              div(class = "img-small", imageOutput("img_pckg"))
                             ),
                             column(
                               width = 11,
