@@ -120,16 +120,6 @@ run.biolutoxR <- function() {
   .shiny-input-container {
     margin: 0px;
   }"
-  
-  
-  
-  # ---- Style général pour les images de l'application ---------------------- #
-  tags$head(tags$style(HTML("
-  .img-pckg-style {
-    width: 50px;
-    height: 50px;
-  }
-  ")))
   # -------------------------------------------------------------------------- #
 
 
@@ -332,12 +322,12 @@ run.biolutoxR <- function() {
       navbarPage("biolutoxR",
                  
                  # --> Panel "Présentation"
-                 tabPanel("Preezasentation",
+                 tabPanel("Presentation",
                           
                           fluidRow(
                             column(
                               width = 1,
-                              div(class = "img-pckg-style", imageOutput("img_pckg"))
+                              imageOutput("img_pckg", width = 50, height = 50)
                             ),
                             column(
                               width = 11,
@@ -592,8 +582,8 @@ run.biolutoxR <- function() {
     output$img_pckg <- renderImage({
       path_to_png_1 <- "www/logo.png"
       list(src = path_to_png_1,
-           width = 75,
-           height = 75)
+           width = "92.025",
+           height = "105.345")
     }, deleteFile = FALSE)
     
     
