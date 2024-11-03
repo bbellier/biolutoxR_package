@@ -327,7 +327,7 @@ run.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
+                              imageOutput("img_pckg")
                             ),
                             column(
                               width = 11,
@@ -580,7 +580,7 @@ run.biolutoxR <- function() {
 
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
-      path_to_png_1 <- system.file("www/logo.png", package = "biolutoxR")
+      path_to_png_1 <- "www/logo.png"
       list(src = path_to_png_1,
            width = "92.025",
            height = "105.345")
