@@ -327,9 +327,7 @@ run.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              tags$img(src = "https://www.r-project.org/logo/Rlogo.png",
-                                       width = 92, 
-                                       height = 105)
+                              HTML('<img src="https://www.r-project.org/logo/Rlogo.png" width="92" height="105">')
                             ),
                             column(
                               width = 11,
