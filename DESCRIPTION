@@ -14,4 +14,5 @@ Imports:
   shinythemes,
   tidyverse,
   drc,
-  ed50
+  ed50,
+  remotes
