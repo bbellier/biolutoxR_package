@@ -330,8 +330,8 @@ run.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              HTML('<img src="https://www.r-project.org/logo/Rlogo.png" width="92" height="105">')
-                            ),
+                              imageOutput("img_pckg", width = 50, height = 50)
+                              ),
                             column(
                               width = 11,
                               h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
@@ -348,9 +348,7 @@ run.biolutoxR <- function() {
                           
                           br(),
                           
-                          tags$img(src = "https://raw.githubusercontent.com/bbellier/biolutoxR_package/refs/heads/main/www/img.png",
-                                   width = 931, 
-                                   height = 449),
+                          imageOutput("img", width = 100, height = 300),
                           
                           br(),
                           br(),
@@ -584,20 +582,20 @@ run.biolutoxR <- function() {
 
 
     # Valeurs de l'img "img_pckg"
-    # output$img_pckg <- renderImage({ 
-    #   list(src = "https://raw.githubusercontent.com/bbellier/biolutoxR_package/refs/heads/main/www/logo.png",
-    #        width = "92",
-    #        height = "105")
-    # }, deleteFile = FALSE)
+    output$img_pckg <- renderImage({
+      list(src = "www/logo.png",
+           width = "92",
+           height = "105")
+    }, deleteFile = FALSE)
     
     
     
     # Valeurs de l'img "img"
-    # output$img <- renderImage({
-    #   list(src = "www/img.png",
-    #        width = "931",
-    #        height = "449")
-    # }, deleteFile = FALSE)
+    output$img <- renderImage({
+      list(src = "www/img.png",
+           width = "931",
+           height = "449")
+    }, deleteFile = FALSE)
     
     
     

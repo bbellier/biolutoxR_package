@@ -50,6 +50,9 @@ example.biolutoxR <- function() {
 
 
   # ---- Installation & Chargement des packages ------------------------------ #
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+  }
   for (package in required_packages) {
     if (!requireNamespace(package, quietly = TRUE)) {
       install.packages(package)
@@ -342,7 +345,7 @@ example.biolutoxR <- function() {
                           
                           br(),
                           
-                          imageOutput("img", height = 300),
+                          imageOutput("img", width = 100, height = 300),
                           
                           br(),
                           br(),
@@ -577,20 +580,18 @@ example.biolutoxR <- function() {
     
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
-      path_to_png_1 <- "img/logo.png"
-      list(src = path_to_png_1,
-           width = "92.025",
-           height = "105.345")
+      list(src = "www/logo.png",
+           width = "92",
+           height = "105")
     }, deleteFile = FALSE)
     
     
     
     # Valeurs de l'img "img"
     output$img <- renderImage({
-      path_to_png_2 <- "img/img.png"
-      list(src = path_to_png_2,
-           width = "931.35",
-           height = "449.55")
+      list(src = "www/img.png",
+           width = "931",
+           height = "449")
     }, deleteFile = FALSE)
   
   
