@@ -321,20 +321,15 @@ run.biolutoxR <- function() {
       # --> Création d'une barre de navigation
       navbarPage("biolutoxR",
                  
-                 # Img
-                 # tags$head(tags$style(HTML("
-                 # .img-small {
-                 # width: 50px;
-                 # height: 50px;
-                 # }"))),
-                 
                  # --> Panel "Présentation"
                  tabPanel("Presentation",
                           
                           fluidRow(
                             column(
                               width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
+                              tags$img(src = "https://raw.githubusercontent.com/bbellier/biolutoxR_package/refs/heads/main/www/logo.png",
+                                       width = 92, 
+                                       height = 105)
                             ),
                             column(
                               width = 11,
@@ -352,7 +347,9 @@ run.biolutoxR <- function() {
                           
                           br(),
                           
-                          imageOutput("img", width = 100, height = 300),
+                          tags$img(src = "https://raw.githubusercontent.com/bbellier/biolutoxR_package/refs/heads/main/www/img.png",
+                                   width = 931, 
+                                   height = 449),
                           
                           br(),
                           br(),
@@ -587,7 +584,7 @@ run.biolutoxR <- function() {
 
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({ 
-      list(src = "www/logo.png",
+      list(src = "https://raw.githubusercontent.com/bbellier/biolutoxR_package/refs/heads/main/www/logo.png",
            width = "92",
            height = "105")
     }, deleteFile = FALSE)
