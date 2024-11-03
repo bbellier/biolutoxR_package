@@ -309,7 +309,12 @@ run.biolutoxR <- function() {
 
   ## C. User Interface (UI) ####
 
-
+  
+  # Chemin vers le dossier contenant les images dans le package
+  image_path <- system.file("www", package = "biolutoxR")
+  
+  # Ajouter le chemin d'accès des images comme ressource Shiny
+  addResourcePath(prefix = 'www', directoryPath = image_path)
 
   # ---- UI part ------------------------------------------------------------- #
   
@@ -331,7 +336,7 @@ run.biolutoxR <- function() {
                           fluidRow(
                             column(
                               width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
+                              tags$img(src = "www/logo.png", width = 50, height = 50)
                               ),
                             column(
                               width = 11,
@@ -583,11 +588,11 @@ run.biolutoxR <- function() {
 
 
     # Valeurs de l'img "img_pckg"
-    output$img_pckg <- renderImage({
-      list(src = paste0(getwd(), "/www/logo.png"),
-           width = "92",
-           height = "105")
-    }, deleteFile = FALSE)
+    # output$img_pckg <- renderImage({
+    #   list(src = "www/logo.png",
+    #        width = "92",
+    #        height = "105")
+    # }, deleteFile = FALSE)
     
     
     
