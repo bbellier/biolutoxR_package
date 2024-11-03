@@ -54,6 +54,9 @@ run.biolutoxR <- function() {
 
 
   # ---- Installation & Chargement des packages ------------------------------ #
+  if (!requireNamespace("remotes", quietly = TRUE)) {
+    install.packages("remotes")
+  }
   for (package in required_packages) {
     if (!requireNamespace(package, quietly = TRUE)) {
       install.packages(package)
