@@ -581,9 +581,7 @@ run.biolutoxR <- function() {
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({
       path_to_png_1 <- "www/logo.png"
-      list(src = path_to_png_1,
-           width = "92.025",
-           height = "105.345")
+      list(src = path_to_png_1)
     }, deleteFile = FALSE)
     
     
