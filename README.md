@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# biolutoxR package: an App-Shiny package <img src="img/logo.png" alt="biolutoxR logo" width="100" align="right"/>
+# biolutoxR package: an App-Shiny package <img src="www/logo.png" alt="biolutoxR logo" width="100" align="right"/>
 
 <!-- badges: start -->
 <!-- badges: end -->
