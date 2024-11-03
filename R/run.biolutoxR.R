@@ -587,7 +587,7 @@ run.biolutoxR <- function() {
 
     # Valeurs de l'img "img_pckg"
     output$img_pckg <- renderImage({ 
-      list(src = system.file("www/logo.png", package = "biolutoxR"),
+      list(src = "www/logo.png",
            width = "92",
            height = "105")
     }, deleteFile = FALSE)
@@ -596,7 +596,7 @@ run.biolutoxR <- function() {
     
     # Valeurs de l'img "img"
     output$img <- renderImage({
-      list(src = system.file("www/img.png", package = "biolutoxR"),
+      list(src = "www/img.png",
            width = "931",
            height = "449")
     }, deleteFile = FALSE)
