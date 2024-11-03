@@ -15,4 +15,5 @@ Imports:
   tidyverse,
   drc,
   ed50,
+  openxlsx,
   remotes
