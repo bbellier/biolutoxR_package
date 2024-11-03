@@ -332,7 +332,7 @@ run.biolutoxR <- function() {
       navbarPage("biolutoxR",
                  
                  # --> Panel "Présentation"
-                 tabPanel("Presentation",
+                 tabPanel("Preezasentation",
                           
                           fluidRow(
                             column(
