@@ -341,7 +341,7 @@ run.biolutoxR <- function() {
                           tags$a(
                             "Link to the image",
                             target = "_blank",
-                            href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img.png"
+                            href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img_white_bckgrnd.png.png"
                           ),
                           
                           br(),
