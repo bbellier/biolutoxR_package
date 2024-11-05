@@ -319,72 +319,55 @@ example.biolutoxR <- function() {
       tags$head(tags$style(HTML(style))),
 
       # --> Création d'une barre de navigation
-      navbarPage("biolutoxR",
-
-                 # --> Panel "Présentation"
-                 tabPanel("Presentation",
-
-                          fluidRow(
-                            column(
-                              width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
-                              ),
-                            column(
-                              width = 11,
-                              h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
-                              h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>"))
-                            )
-                          ),
-
-                          br(),
-                          br(),
-
-                          h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
-                          p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
-                          p("An image for resume the manipulation:"),   
-                          
-                          br(),
-                          
-                          imageOutput("img", width = 100, height = 300),
-                          
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-
-                          h3(HTML("<b>How use this app?</b>")),
-                          h4(HTML("<i>> Scheme tab:</i>")),
-                          p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
-                          p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
-                          h4(HTML("<i>> Times tab:</i>")),
-                          p("- Complete the field with the relevant exposure time."),
-                          p("- Complete matrices based on the bioluminescence values obtained during the test."),
-                          h4(HTML("<i>> Table tab:</i>")),
-                          p("- This tab print the cleaned data."),
-                          p("- The cleaned final data table can be exported in '.csv' format."),
-                          h4(HTML("<i>> Plot tab:</i>")),
-                          p("- To visualize test results."),
-                          p("- To print dose-response curve."),
-                          p("- To calculate ECx values."),
-                          h4(HTML("<i>> Exit tab:</i>")),
-                          p("- To quit this application."),
-
-                          br(),
-
-                          h3(HTML("<b style='color: red;'>Warning</b>")),
-                          p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
-                          p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
-                          
-                          br(),
-                          br(),
-                          br(),
-                          
-                          h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
+      navbarPage("Presentation",
+                 
+                 h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
+                 h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>")),
+                 
+                 br(),
+                 br(),
+                 
+                 h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
+                 p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
+                 p("An image for resume the manipulation:"),   
+                 
+                 tags$a(
+                   "Link to the image",
+                   target = "_blank",
+                   href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img.png"
+                 ),
+                 
+                 br(),
+                 br(),
+                 
+                 h3(HTML("<b>How use this app?</b>")),
+                 h4(HTML("<i>> Scheme tab:</i>")),
+                 p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
+                 p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
+                 h4(HTML("<i>> Times tab:</i>")),
+                 p("- Complete the field with the relevant exposure time."),
+                 p("- Complete matrices based on the bioluminescence values obtained during the test."),
+                 h4(HTML("<i>> Table tab:</i>")),
+                 p("- This tab print the cleaned data."),
+                 p("- The cleaned final data table can be exported in '.csv' format."),
+                 h4(HTML("<i>> Plot tab:</i>")),
+                 p("- To visualize test results."),
+                 p("- To print dose-response curve."),
+                 p("- To calculate ECx values."),
+                 h4(HTML("<i>> Exit tab:</i>")),
+                 p("- To quit this application."),
+                 
+                 br(),
+                 
+                 h3(HTML("<b style='color: red;'>Warning</b>")),
+                 p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
+                 p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
+                 
+                 br(),
+                 br(),
+                 br(),
+                 
+                 h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
                           
                  ), # Fermeture du panel "Présentation"
 
@@ -575,24 +558,6 @@ example.biolutoxR <- function() {
 
 
     ### a. Définition des valeurs par défaut ####
-
-
-    
-    # Valeurs de l'img "img_pckg"
-    output$img_pckg <- renderImage({
-      list(src = "www/logo.png",
-           width = "92",
-           height = "105")
-    }, deleteFile = FALSE)
-    
-    
-    
-    # Valeurs de l'img "img"
-    output$img <- renderImage({
-      list(src = "www/img.png",
-           width = "931",
-           height = "449")
-    }, deleteFile = FALSE)
   
   
   
