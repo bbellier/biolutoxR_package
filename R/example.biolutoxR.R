@@ -310,74 +310,77 @@ example.biolutoxR <- function() {
 
   # ---- UI part ------------------------------------------------------------- #
   biolutoxR_ui <-
-
+    
     # --> FluidPage
     fluidPage(
-
+      
       # --> Définition du style (visuel) de l'application
       theme = shinytheme("yeti"),
       tags$head(tags$style(HTML(style))),
-
+      
       # --> Création d'une barre de navigation
-      navbarPage("Presentation",
+      navbarPage("biolutoxR",
                  
-                 h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
-                 h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>")),
-                 
-                 br(),
-                 br(),
-                 
-                 h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
-                 p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
-                 p("An image for resume the manipulation:"),   
-                 
-                 tags$a(
-                   "Link to the image",
-                   target = "_blank",
-                   href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img.png"
-                 ),
-                 
-                 br(),
-                 br(),
-                 
-                 h3(HTML("<b>How use this app?</b>")),
-                 h4(HTML("<i>> Scheme tab:</i>")),
-                 p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
-                 p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
-                 h4(HTML("<i>> Times tab:</i>")),
-                 p("- Complete the field with the relevant exposure time."),
-                 p("- Complete matrices based on the bioluminescence values obtained during the test."),
-                 h4(HTML("<i>> Table tab:</i>")),
-                 p("- This tab print the cleaned data."),
-                 p("- The cleaned final data table can be exported in '.csv' format."),
-                 h4(HTML("<i>> Plot tab:</i>")),
-                 p("- To visualize test results."),
-                 p("- To print dose-response curve."),
-                 p("- To calculate ECx values."),
-                 h4(HTML("<i>> Exit tab:</i>")),
-                 p("- To quit this application."),
-                 
-                 br(),
-                 
-                 h3(HTML("<b style='color: red;'>Warning</b>")),
-                 p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
-                 p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
-                 
-                 br(),
-                 br(),
-                 br(),
-                 
-                 h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
+                 # --> Création d'une barre de navigation
+                 tabPanel("Presentation",
+                          
+                          h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
+                          h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>")),
+                          
+                          br(),
+                          br(),
+                          
+                          h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
+                          p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
+                          p("An image for resume the manipulation:"),   
+                          
+                          tags$a(
+                            "Link to the image",
+                            target = "_blank",
+                            href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img.png"
+                          ),
+                          
+                          br(),
+                          br(),
+                          
+                          h3(HTML("<b>How use this app?</b>")),
+                          h4(HTML("<i>> Scheme tab:</i>")),
+                          p("- Complete the following fields: Manipulation name (name of the experiment), Number of matrices (depending of the set number), Number of lines (often 6), Number of columns (often 5) and Negative control name (for example NegControl)"),
+                          p("- Complete matrices, i.e. for each cell, the name of the solution, the dilution, the biological replicate and finally the short name of the solution, all separated by a comma."),
+                          h4(HTML("<i>> Times tab:</i>")),
+                          p("- Complete the field with the relevant exposure time."),
+                          p("- Complete matrices based on the bioluminescence values obtained during the test."),
+                          h4(HTML("<i>> Table tab:</i>")),
+                          p("- This tab print the cleaned data."),
+                          p("- The cleaned final data table can be exported in '.csv' format."),
+                          h4(HTML("<i>> Plot tab:</i>")),
+                          p("- To visualize test results."),
+                          p("- To print dose-response curve."),
+                          p("- To calculate ECx values."),
+                          h4(HTML("<i>> Exit tab:</i>")),
+                          p("- To quit this application."),
+                          
+                          br(),
+                          
+                          h3(HTML("<b style='color: red;'>Warning</b>")),
+                          p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
+                          p(HTML("<b style='color: red;'> - Never add new matrices after a fill, otherwise the data will be lost.</b>")),
+                          
+                          br(),
+                          br(),
+                          br(),
+                          
+                          h5(HTML("<i style='text-align: right; display: block;'>A R-Shiny app package developed by Bellier Benjamin and Le Picard Coralie.</i>"))
                           
                  ), # Fermeture du panel "Présentation"
-
+                 
                  # --> Panel "Scheme"
                  tabPanel("Scheme",
-
+                          
                           h3(HTML("<b>Data settings:</b>")),
-
+                          
                           br(),
-
+                          
                           fluidRow(
                             column(2, align = "center", textInput("manip_name", "Manipulation name:")),
                             column(2, align = "center", numericInput("n_set", "Number of matrices:", min = 1, max = 20, value = 2)),
@@ -390,64 +393,64 @@ example.biolutoxR <- function() {
                           
                           h3(HTML("<b>Scheme matrix/matrices:</b>")),
                           uiOutput("matrix_scheme")
-
+                          
                  ), # Fermeture du panel "Scheme"
-
+                 
                  # --> Panel "Time 1"
                  tabPanel("Time 1",
-
+                          
                           h3(HTML("<b>Time 1 matrix/matrices:</b>")),
                           textInput("t_input_t1", "Time (in min):"),
                           
                           br(), 
                           
                           uiOutput("matrix_t1")
-
+                          
                  ), # Fermeture du panel "Time 1"
-
+                 
                  # --> Panel "Time 2"
                  tabPanel("Time 2",
-
+                          
                           h3(HTML("<b>Time 2 matrix/matrices:</b>")),
                           textInput("t_input_t2", "Time (in min):"),
                           
                           br(), 
                           
                           uiOutput("matrix_t2")
-
+                          
                  ), # Fermeture du panel "Time 2"
-
+                 
                  # --> Panel "Time 3"
                  tabPanel("Time 3",
-
+                          
                           h3(HTML("<b>Time 3 matrix/matrices:</b>")),
                           textInput("t_input_t3", "Time (in min):"),
                           
                           br(), 
                           
                           uiOutput("matrix_t3")
-
+                          
                  ), # Fermeture du panel "Time 3"
-
+                 
                  # --> Panel "Table"
                  tabPanel("Table",
-
+                          
                           h3(HTML("<b>Final data table:</b>")),
                           downloadButton("download_table_csv", "Download CSV"),
                           downloadButton("download_table_xlsx", "Download XLSX"),
-
+                          
                           br(),
                           br(),
-
+                          
                           dataTableOutput("final_data_table")
-
+                          
                  ), # Fermeture du panel "Table"
-
+                 
                  # --> Panel "Plot"
                  tabPanel("Plot",
-
+                          
                           h3(HTML("<b>Final data plot:</b>")),
-
+                          
                           fluidRow(
                             column(
                               width = 4,
@@ -458,14 +461,14 @@ example.biolutoxR <- function() {
                                 column(2, align = "left", uiOutput("dynamic_filter_t2")),
                                 column(2, align = "left", uiOutput("dynamic_filter_t3"))
                               ),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Select dilution(s) to conserve:")),
                               uiOutput("dynamic_dilution_checkboxes"),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Select variables:")),
                               selectInput("x_variable", "Variable X",
                                           choices = c("sol", "dil", "rep_bio", "sol_sh", "id", "time", "set", "manip_name")),
@@ -477,22 +480,22 @@ example.biolutoxR <- function() {
                             column(
                               width = 8,
                               plotOutput("plot_biolutoxR"),
-
+                              
                               br(),
-
+                              
                               fluidRow(
                                 column(3),
                                 column(6, div(style = "text-align: center;", uiOutput("dynamic_substance_checkboxes"))),
                                 column(3)
                               ),
-
+                              
                               br()
-
+                              
                             )
                           ),
-
+                          
                           br(),
-
+                          
                           h3(HTML("<b>Dose-Response curve:</b>")),
                           fluidRow(
                             column(
@@ -504,29 +507,29 @@ example.biolutoxR <- function() {
                                 column(2, align = "left", uiOutput("dynamic_filter_t2_2")),
                                 column(2, align = "left", uiOutput("dynamic_filter_t3_2"))
                               ),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Select the variable of interest:")),
                               selectInput("sol", "Variable:", choices = NULL, selectize = FALSE),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Select the % of efectiveness")),
                               numericInput("ecX_input_value", "Value (in %)", 50, min = 1, max = 100),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Result:")),
                               textOutput("ecX_text"),
-
+                              
                               br(),
-
+                              
                               h5(HTML("Explanation:")),
                               textOutput("ecX_text2"),
-
+                              
                               br()
-
+                              
                             ),
                             column(
                               width = 8,
@@ -535,17 +538,17 @@ example.biolutoxR <- function() {
                             )
                           )
                  ), # Fermeture du panel "Plot"
-
+                 
                  # --> Panel "Exit"
                  tabPanel("Exit",
                           actionButton("exit_btn", "Exit")
                  ) # Fermeture du panel "Exit"
-
+                 
       ) # Fermeture du style
-
+      
     ) # Fermeture de la FluidPage
   # -------------------------------------------------------------------------- #
-
+  
 
 
   ## D. Server ####
