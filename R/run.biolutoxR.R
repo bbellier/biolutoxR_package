@@ -328,17 +328,8 @@ run.biolutoxR <- function() {
                  # --> Panel "Présentation"
                  tabPanel("Presentation",
                           
-                          fluidRow(
-                            column(
-                              width = 1,
-                              imageOutput("img_pckg", width = 50, height = 50)
-                              ),
-                            column(
-                              width = 11,
-                              h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
-                              h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>"))
-                            )
-                          ),
+                          h3(HTML("<b>Welcome to the biolutoxR app!</b>")),
+                          h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>")),
                           
                           br(),
                           br(),
@@ -347,17 +338,12 @@ run.biolutoxR <- function() {
                           p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
                           p("An image for resume the manipulation:"),   
                           
-                          br(),
+                          tags$a(
+                            "Link to the image",
+                            target = "_blank",
+                            href = "https://github.com/bbellier/biolutoxR_package/blob/main/www/img.png"
+                          ),
                           
-                          imageOutput("img", width = 100, height = 300),
-                          
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
-                          br(),
                           br(),
                           br(),
                           
@@ -583,20 +569,20 @@ run.biolutoxR <- function() {
 
 
     # Valeurs de l'img "img_pckg"
-    output$img_pckg <- renderImage({
-      list(src = "www/logo.png",
-           width = "92",
-           height = "105")
-    }, deleteFile = FALSE)
+    # output$img_pckg <- renderImage({
+    #   list(src = "www/logo.png",
+    #        width = "92",
+    #        height = "105")
+    # }, deleteFile = FALSE)
     
     
     
     # Valeurs de l'img "img"
-    output$img <- renderImage({
-      list(src = "www/img.png",
-           width = "931",
-           height = "449")
-    }, deleteFile = FALSE)
+    # output$img <- renderImage({
+    #   list(src = "www/img.png",
+    #        width = "931",
+    #        height = "449")
+    # }, deleteFile = FALSE)
     
     
     
