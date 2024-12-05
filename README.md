@@ -43,6 +43,15 @@ To enter your own data, you can use the “run.biolutoxR()” function:
 # run.biolutoxR()
 ```
 
+
+## Import your own .xlsx data on the app
+
+To enter your own .xlsx data, you can use the "import.biolutoxR()" function:
+
+``` r
+# import.biolutoxR()
+```
+
 ## Citation
 
 Please cite this package as:
