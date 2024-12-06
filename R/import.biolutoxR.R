@@ -306,6 +306,8 @@ import.biolutoxR <- function() {
                         h4(HTML("<i>> Exit tab:</i>")),
                         p("- To quit this application."),
                         
+                        br(),
+                        
                         p("An image for resume the tab functions:"),   
                         
                         tags$a(
