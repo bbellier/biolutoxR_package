@@ -306,6 +306,14 @@ import.biolutoxR <- function() {
                         h4(HTML("<i>> Exit tab:</i>")),
                         p("- To quit this application."),
                         
+                        p("An image for resume the tab functions:"),   
+                        
+                        tags$a(
+                          "Link to the image",
+                          target = "_blank",
+                          href = "https://github.com/bbellier/biolutoxR_package/blob/main/img/img_pres_tabs_2.png"
+                        ),
+                        
                         br(),
                         
                         h3(HTML("<b style='color: red;'>Warning</b>")),
