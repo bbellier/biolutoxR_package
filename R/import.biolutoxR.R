@@ -129,6 +129,10 @@ import.biolutoxR <- function() {
   
   
   
+  ## B. Fonctions ####
+  
+  
+  
   # ---- Fonction pour calculer une ECx -------------------------------------- #
   toxicity_data_ecX <- function(data, X = 50) {
     drm_model <- drm(mean_perc_inhib_corr ~ as.numeric(dil), data = data,
@@ -459,6 +463,13 @@ import.biolutoxR <- function() {
   # ---- Server part --------------------------------------------------------- #
   biolutoxR_server <- function(input, output, session) {
     
+    
+    
+  ### a. Définition des valeurs par défaut ####
+    
+    
+    
+  # Données traitées  
   data <- reactive({
     
     req(input$file)
@@ -567,7 +578,7 @@ import.biolutoxR <- function() {
   
   
   
-  ### d. Création d'un tableau final ####
+  ### b. Création d'un tableau final ####
   
   
   
@@ -617,7 +628,7 @@ import.biolutoxR <- function() {
   
   
   
-  ### e. Création d'un graphique final "général" ####
+  ### c. Création d'un graphique final "général" ####
   
   
   
@@ -753,7 +764,7 @@ import.biolutoxR <- function() {
   
   
   
-  ### f. Création d'un graphique final "toxicité" ####
+  ### d. Création d'un graphique final "toxicité" ####
   
   
   
@@ -810,7 +821,7 @@ import.biolutoxR <- function() {
   
 
   
-  ## g. Création d'un graphique final "toxicité" ####
+  ## e. Création d'un graphique final "toxicité" ####
   observeEvent(input$exit_btn,{
     stopApp()
     clean_workspace()
