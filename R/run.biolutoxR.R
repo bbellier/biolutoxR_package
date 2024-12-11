@@ -13,8 +13,10 @@
 #' @import shinythemes
 #' @import tidyverse
 #' @import drc
+#' @import DT
 #' @import ed50
 #' @import openxlsx
+#' @import remotes
 
 
 
@@ -47,7 +49,8 @@ run.biolutoxR <- function() {
     "drc",
     "ed50",
     "openxlsx",
-    "remotes"
+    "remotes",
+    "DT"
   )
   # -------------------------------------------------------------------------- #
 
