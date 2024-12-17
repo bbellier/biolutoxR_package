@@ -335,10 +335,31 @@ run.biolutoxR <- function() {
                           h5(HTML("<i>This R-Shiny application facilitates data analysis for toxicity tests based on bacterial bioluminescence inhibition.</i>")),
                           
                           br(),
+                          
+                          p("See the article and package website for more informations:"), 
+                          
+                          tags$a(
+                            "Link to the article",
+                            target = "_blank",
+                            href = "https://www.researchgate.net/publication/385365110_Biolutoxr_An_R-Shiny_Package_for_Easy_Performing_Data_Analysis_of_a_Toxicity_Test_Based_on_Bacterial_Bioluminescence_Inhibition"
+                          ),
+                          
+                          br(), 
+                          
+                          tags$a(
+                            "Link to the package website",
+                            target = "_blank",
+                            href = "https://bbellier.github.io/biolutoxR_website/"
+                          ),
+                          
+                          br(),
                           br(),
                           
                           h3(HTML("<b>What is a toxicity test based on bacterial bioluminescence inhibition?</b>")),
                           p("Bacterial bioassays using bioluminescence inhibition are used to assess the bioluminescent response of bacteria to exposure to a solution of interest at different exposure times, typically 5, 15 and 30 minutes. Under optimal conditions, these bacteria produce bioluminescence. This bioluminescence is directly linked to the respiratory metabolic process of the bacteria. However, when bacteria are exposed to a toxic substance, this metabolic process is disrupted, leading to an inhibition of bioluminescence. This reaction is therefore exploited in this type of test to study the direct link between light intensity and the level of toxicity of a sample of interest compared with a control sample."),
+                          
+                          br(), 
+                          
                           p("An image for resume the manipulation:"),   
                           
                           tags$a(
@@ -348,6 +369,11 @@ run.biolutoxR <- function() {
                           ),
                           
                           br(),
+                          br(),
+                          
+                          h3(HTML("<b>What is the purpose of these types of toxicity tests?</b>")),
+                          p("These toxicity tests can be used to study the toxicity of a target sample, including a unique molecule (e.g. N(1,3-dimethylbutyl)-N'-phenyl-p-phenylenediamine), a mixture of molecules (e.g. tyre and road wear particles) or a specific matrix (e.g. stormwater runoff). Thus, these toxicity tests can contribute to improving our knowledge of toxicity mechanisms, particularly by supplementing the ecotoxicity databases available with toxicity values (ECx), which are currently still very limited in terms of quality and quantity."),
+                          
                           br(),
                           
                           h3(HTML("<b>How use this app?</b>")),
@@ -378,6 +404,7 @@ run.biolutoxR <- function() {
                           ),
                           
                           br(),
+                          br(), 
                           
                           h3(HTML("<b style='color: red;'>Warning</b>")),
                           p(HTML("<b style='color: red;'> - Open the tabs in order to clean the data input, print the plots and obtain the reference ecotoxicity data.</b>")),
